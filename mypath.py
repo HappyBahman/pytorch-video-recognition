@@ -18,13 +18,14 @@ class Path(object):
             return root_dir, output_dir
         elif database == 'human_actions':
             # folder that contains class labels
-            root_dir = '/content/dataset/'
+            root_dir = '/content/pytorch-video-recognition/dataset'
 
-            output_dir = '/content/dataset/VAR'
+            output_dir = '/content/pytorch-video-recognition/datasetVAR'
+            return root_dir, output_dir
         else:
             print('Database {} not available.'.format(database))
             raise NotImplementedError
 
     @staticmethod
     def model_dir():
-        return '/path/to/Models/c3d-pretrained.pth'
+        return '/content/pytorch-video-recognition/c3d_pretrained.pth'
