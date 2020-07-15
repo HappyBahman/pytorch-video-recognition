@@ -68,6 +68,11 @@ class VideoDataset(Dataset):
                     for id, label in enumerate(sorted(self.label2index)):
                         f.writelines(str(id+1) + ' ' + label + '\n')
 
+        elif dataset == 'human_actions':
+            if not os.path.exists('dataloaders/human_actions_labels.txt'):
+                with open('dataloaders/human_actions.txt', 'w') as f:
+                    for id, label in enumerate(sorted(self.label2index)):
+                        f.writelines(str(id+1) + ' ' + label + '\n')
 
     def __len__(self):
         return len(self.fnames)

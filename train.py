@@ -28,11 +28,13 @@ lr = 1e-3 # Learning rate
 dataset = 'ucf101' # Options: hmdb51 or ucf101
 
 if dataset == 'hmdb51':
-    num_classes=51
+    num_classes = 51
 elif dataset == 'ucf101':
     num_classes = 101
+elif dataset == 'human_actions':
+    num_classes = 8
 else:
-    print('We only implemented hmdb and ucf datasets.')
+    print('We only implemented hmdb and ucf (and human actions) datasets.')
     raise NotImplementedError
 
 save_dir_root = os.path.join(os.path.dirname(os.path.abspath(__file__)))
@@ -48,6 +50,7 @@ else:
 save_dir = os.path.join(save_dir_root, 'run', 'run_' + str(run_id))
 modelName = 'C3D' # Options: C3D or R2Plus1D or R3D
 saveName = modelName + '-' + dataset
+
 
 def train_model(dataset=dataset, save_dir=save_dir, num_classes=num_classes, lr=lr,
                 num_epochs=nEpochs, save_epoch=snapshot, useTest=useTest, test_interval=nTestInterval):
