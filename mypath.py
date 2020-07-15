@@ -16,6 +16,11 @@ class Path(object):
             output_dir = '/path/to/VAR/hmdb51'
 
             return root_dir, output_dir
+        elif database == 'human_actions':
+            # folder that contains class labels
+            root_dir = '/content/dataset/'
+
+            output_dir = '/content/dataset/VAR'
         else:
             print('Database {} not available.'.format(database))
             raise NotImplementedError

@@ -25,7 +25,9 @@ nTestInterval = 20 # Run on test set every nTestInterval epochs
 snapshot = 50 # Store a model every snapshot epochs
 lr = 1e-3 # Learning rate
 
-dataset = 'ucf101' # Options: hmdb51 or ucf101
+load_from = './c3d_pretrained.pth'
+
+dataset = 'human_actions' # Options: hmdb51 or ucf101
 
 if dataset == 'hmdb51':
     num_classes = 51
@@ -88,6 +90,11 @@ def train_model(dataset=dataset, save_dir=save_dir, num_classes=num_classes, lr=
             os.path.join(save_dir, 'models', saveName + '_epoch-' + str(resume_epoch - 1) + '.pth.tar')))
         model.load_state_dict(checkpoint['state_dict'])
         optimizer.load_state_dict(checkpoint['opt_dict'])
+
+    # for fine-tuning the network
+    if load_from is not None:
+        print('====loading pre-trained model====')
+        model.load_state_dict(load_from)
 
     print('Total params: %.2fM' % (sum(p.numel() for p in model.parameters()) / 1000000.0))
     model.to(device)
