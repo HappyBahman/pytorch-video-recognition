@@ -25,6 +25,8 @@ nTestInterval = 20 # Run on test set every nTestInterval epochs
 snapshot = 50 # Store a model every snapshot epochs
 lr = 1e-3 # Learning rate
 
+train_fc_only = True
+
 dataset = 'human_actions' # Options: hmdb51 or ucf101
 
 if dataset == 'hmdb51':
@@ -88,6 +90,17 @@ def train_model(dataset=dataset, save_dir=save_dir, num_classes=num_classes, lr=
             os.path.join(save_dir, 'models', saveName + '_epoch-' + str(resume_epoch - 1) + '.pth.tar')))
         model.load_state_dict(checkpoint['state_dict'])
         optimizer.load_state_dict(checkpoint['opt_dict'])
+
+    if train_fc_only:
+        self.conv1.requires_grad = False
+        self.pool1.requires_grad = False
+        self.pool2.requires_grad = False
+        self.conv3b.requires_grad = False
+        self.pool3.requires_grad = False
+        self.conv4b.requires_grad = False
+        self.pool4.requires_grad = False
+        self.conv5b.requires_grad = False
+        self.pool5.requires_grad = False
 
     print('Total params: %.2fM' % (sum(p.numel() for p in model.parameters()) / 1000000.0))
     model.to(device)
